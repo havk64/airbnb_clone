@@ -5,6 +5,7 @@
  ===----------------------------------------------------------------------------------===
 """
 import os
+from peewee import *
 
 ENV = os.environ
 test = True if ENV['AIRBNB_ENV'] == 'production' else False
@@ -18,6 +19,5 @@ DATABASE = {
     'database': ('airbnb_dev', 'airbnb_prod')[test],
     'port': '3306',
     'charset': 'utf8',
-    'password': (ENV['AIRBNB_DATABASE_PWD_DEV', ENV['AIRBNB_DATABASE_PWD_PROD'],])[test]
+    'password': (ENV.get('AIRBNB_DATABASE_PWD_DEV'), ENV.get('AIRBNB_DATABASE_PWD_PROD'))[test]
 }
-
