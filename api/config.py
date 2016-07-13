@@ -5,7 +5,6 @@
  ===----------------------------------------------------------------------------------===
 """
 import os
-from peewee import *
 
 ENV = os.environ
 if 'AIRBNB_ENV' not in ENV:
