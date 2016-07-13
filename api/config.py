@@ -8,6 +8,9 @@ import os
 from peewee import *
 
 ENV = os.environ
+if 'AIRBNB_ENV' not in ENV:
+    raise Exception("Environment variable AIRBNB_ENV not set")
+
 test = True if ENV['AIRBNB_ENV'] == 'production' else False
 
 DEBUG = (True, False)[test]
