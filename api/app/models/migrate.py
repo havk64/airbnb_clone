@@ -1,4 +1,4 @@
-from base import db
+from base import database
 from user import User
 from state import State
 from city import City
@@ -7,6 +7,6 @@ from place_book import PlaceBook
 from amenity import Amenity
 from place_amenity import PlaceAmenities
 
-db.connect()
+database.connect()
 
-db.create_tables([User, State, City, Place, PlaceBook, Amenity, PlaceAmenities], safe = True)
+database.create_tables([User, State, City, Place, PlaceBook, Amenity, PlaceAmenities], safe = True)

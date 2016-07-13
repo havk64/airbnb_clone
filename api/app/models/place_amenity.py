@@ -1,5 +1,5 @@
 from peewee import ForeignKeyField, Model
-from base import db
+from base import database
 from place  import Place
 from amenity import Amenity
 
@@ -8,4 +8,4 @@ class PlaceAmenities(Model):
     amenity = ForeignKeyField(Amenity)
 
     class Meta():
-        database = db
+        database = database
