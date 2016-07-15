@@ -51,5 +51,6 @@ DATABASE = {
     'password': options['password']
 }
 
-print(DEBUG, HOST, PORT)
-print(DATABASE)
+# Testing the environment:
+# print(DEBUG, HOST, PORT)
+# print(DATABASE)
