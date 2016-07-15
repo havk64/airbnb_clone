@@ -7,8 +7,12 @@
  * ===-----------------------------------------------------------------------===
  */
 
+
+-- Creating new user:
 CREATE USER 'airbnb_user_test'@'%' IDENTIFIED BY 'unit_test_pass'; -- anywhere
 
+-- Creating new database:
 CREATE DATABASE airbnb_test  CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+-- Granting permissions:
 GRANT ALL PRIVILEGES ON airbnb_test.*  TO 'airbnb_user_test'@'%';
