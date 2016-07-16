@@ -8,7 +8,8 @@ from os import environ
 
 ENV = environ
 if 'AIRBNB_ENV' not in ENV:
-    raise Exception("Environment variable AIRBNB_ENV not set")
+    raise Exception("Environment variable AIRBNB_ENV not set\n"
+                    "Expected to be 'development', 'production', or 'test'")
 
 def setenv(env):
     options = {}
@@ -46,7 +47,7 @@ DATABASE = {
     'host': '158.69.78.253',
     'user': options['user'],
     'database': options['db'],
-    'port': '3306',
+    'port': 3306,
     'charset': 'utf8',
     'password': options['password']
 }
