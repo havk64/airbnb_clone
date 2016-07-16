@@ -12,33 +12,35 @@ if 'AIRBNB_ENV' not in ENV:
                     "Expected to be 'development', 'production', or 'test'")
 
 def setenv(env):
-    options = {}
-    if env['AIRBNB_ENV'] == 'production':
-        options['debug']    = False
-        options['host']     = '0.0.0.0'
-        options['port']     = 3000
-        options['user']     = 'airbnb_user_prod'
-        options['db']       = 'airbnb_prod'
-        options['password'] = ENV.get('AIRBNB_DATABASE_PWD_PROD')
-    elif env['AIRBNB_ENV'] == 'development':
-        options['debug']    = True
-        options['host']     = 'localhost'
-        options['port']     = 3333
-        options['user']     = 'airbnb_user_dev'
-        options['db']       = 'airbnb_dev'
-        options['password'] = ENV.get('AIRBNB_DATABASE_PWD_DEV')
-    else:
-        options['debug']    = False
-        options['host']     = 'localhost'
-        options['port']     = 5555
-        options['user']     = 'airbnb_user_test'
-        options['db']       = 'airbnb_test'
-        options['password'] = ENV.get('AIRBNB_DATABASE_PWD_TEST')
+    switch = {
+        'production'    : {
+            'debug'     : False,
+            'host'      : '0.0.0.0',
+            'port'      : 3000,
+            'user'      : 'airbnb_user_prod',
+            'db'        : 'airbnb_prod',
+            'password'  : ENV.get('AIRBNB_DATABASE_PWD_PROD')
+        },
+        'development'   : {
+            'debug'     : True,
+            'host'      : 'localhost',
+            'port'      : 3333,
+            'user'      : 'airbnb_user_dev',
+            'db'        : 'airbnb_dev',
+            'password'  : ENV.get('AIRBNB_DATABASE_PWD_DEV')
+        },
+        'test'          : {
+            'debug'     : False,
+            'host'      : 'localhost',
+            'port'      : 5555,
+            'user'      : 'airbnb_user_test',
+            'db'        : 'airbnb_test',
+            'password'  : ENV.get('AIRBNB_DATABASE_PWD_TEST')
+        }
+    }
+    return switch.get(env)
 
-    return options
-
-
-options = setenv(ENV)
+options = setenv(ENV['AIRBNB_ENV'])
 
 DEBUG   = options['debug']
 HOST    = options['host']
