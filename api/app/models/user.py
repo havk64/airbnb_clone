@@ -1,5 +1,5 @@
 from peewee import CharField, BooleanField
-from base import BaseModel
+from base import *
 from hashlib import md5
 
 class User(BaseModel):
@@ -10,4 +10,13 @@ class User(BaseModel):
     is_admin = BooleanField(default = False)
 
     def set_password(self, clear_password):
-        self__.password = md5(clear_password).hexdigest()
+        self.password = md5(clear_password).hexdigest()
+
+    def to_hash(self):
+        user = {
+			'email': self.email,
+			'first_name': self.first_name,
+			'last_name': self.last_name,
+			'is_admin': self.is_admin
+            }
+        return super(User, self).to_hash(self, user)
