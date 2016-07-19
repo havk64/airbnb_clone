@@ -28,6 +28,7 @@ def create_user():
         first_name = data['first_name'],
         last_name = data['last_name']
     )
+    """Saving the hashed password"""
     user.set_password(data['password'])
     user.save()
 
@@ -47,6 +48,7 @@ def get_user(id):
 @app.route('/users/<int:id>', methods=['PUT'])
 @as_json
 def update_user(id):
+    """Update the user"""
     data = request.form
     user = User.get(User.id == id)
     for item in data:
