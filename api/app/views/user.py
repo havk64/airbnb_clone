@@ -7,6 +7,7 @@ from datetime import datetime
 
 @app.route("/users", methods=["GET"])
 def get_users():
+    """Gettin all users"""
     users = []
     query = User.select()
     for i in query:
