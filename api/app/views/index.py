@@ -1,13 +1,13 @@
-from flask import Flask
 from app import app
 from app.models.base import database
-from flask_json import FlaskJSON, as_json, jsonify
+from flask_json import as_json
 from datetime import datetime
 
 
 @app.route('/', methods=["GET"])
 @as_json
 def index():
+	"""Output for root dir"""
 	utc = datetime.utcnow().strftime("%d/%m/%Y %H:%M:%S")
 	now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 	return dict(status='OK', utc_time=utc, time=now)
@@ -19,5 +19,7 @@ def after_request():
 	database.close()
 
 @app.errorhandler(404)
+@as_json
 def not_found(error):
-	return jsonify(code=404, msg='not found')#, 404
+	"""Response for not found"""
+	return {'code': 404, 'msg':'not found'}, 404
