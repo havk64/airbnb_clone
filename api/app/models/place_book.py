@@ -4,6 +4,7 @@ from place  import Place
 from user   import User
 
 class PlaceBook(BaseModel):
+    """Definition of PlacBook Model"""
     place = ForeignKeyField(Place)
     user = ForeignKeyField(User, related_name = "places_booked")
     is_validated = BooleanField(default = False)
@@ -11,6 +12,7 @@ class PlaceBook(BaseModel):
     number_nights = IntegerField(default = 1)
 
     def to_hash(self):
+        """Method to_hash returns the Placebook object model"""
         user = User.get(User.id == self.user)
         place = Place.get(Place.id == self.place)
         placebook = {
