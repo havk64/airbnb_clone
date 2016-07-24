@@ -4,6 +4,7 @@ from user import User
 from city import City
 
 class Place(BaseModel):
+    """Definition of Place class"""
     owner = ForeignKeyField(User, related_name = "places")
     city = ForeignKeyField(City, related_name = "places")
     name = CharField(128, null = False)
@@ -15,6 +16,7 @@ class Place(BaseModel):
     latitude = FloatField()
     longitude = FloatField()
     def to_hash(self):
+        """Method to return a hash of Place object model"""
         place = {
             'owner'         : User.get(User.id == self.owner),
             'owner_id'      : owner.id,
