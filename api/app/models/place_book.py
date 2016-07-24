@@ -9,3 +9,15 @@ class PlaceBook(BaseModel):
     is_validated = BooleanField(default = False)
     date_start = DateTimeField(null = False)
     number_nights = IntegerField(default = 1)
+
+    def to_hash(self):
+        user = User.get(User.id == self.user)
+        place = Place.get(Place.id == self.place)
+        placebook = {
+            'place_id'      = place.id,
+            'user_id'       = user.id,
+            'is_validated'  = self.is_validated,
+            'date_start'    = self.date_start.strftime("%Y/%m/%d %H:%M:%S"),
+            'number_nights' = self.number_nights
+        }
+        return super(PlaceBook, self).to_hash(self, placebook)
