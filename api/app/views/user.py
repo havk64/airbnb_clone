@@ -1,5 +1,4 @@
 from app import app
-from flask import abort
 from flask_json import as_json, request, jsonify
 from app.models.user import User
 from datetime import datetime
