@@ -22,3 +22,13 @@ def create state():
         name = data['name']
     )
     return {'code': 201,'msg': 'State was created successfully'}, 201
+
+@app.route('/states/<int:number>')
+@as_json
+def get_state(number):
+    try:
+        state = State.get(State.id == number)
+    except Exception as e:
+        return {'code': 404, 'msg': "State not found"}, 404
+
+    return state.to_hash(), 200
