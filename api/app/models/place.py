@@ -17,18 +17,18 @@ class Place(BaseModel):
     longitude = FloatField()
     def to_hash(self):
         """Method to return a hash of Place object model"""
+        city = City.get(City.id == self.city)
+        owner = User.get(User.id == self.owner)
         place = {
-            'owner'         : User.get(User.id == self.owner),
-            'owner_id'      : owner.id,
-            'city'          : City.get(City.id == self.city),
-            'city_id'       : city.id,
-            'name'          : self.name,
-            'description'   : self.description,
-            'number_rooms'  : self.number_rooms,
-            'number_bathrooms' : self.number_bathrooms,
-            'max_guest'     : self.max_guest,
-            'price_by_night': self.price_by_night,
-            'latitute'      : self.latitute,
-            'longitude'     : self.longitude
+            'owner_id'          : owner.id,
+            'city_id'           : city.id,
+            'name'              : self.name,
+            'description'       : self.description,
+            'number_rooms'      : self.number_rooms,
+            'number_bathrooms'  : self.number_bathrooms,
+            'max_guest'         : self.max_guest,
+            'price_by_night'    : self.price_by_night,
+            'latitute'          : self.latitute,
+            'longitude'         : self.longitude
         }
         return super(Place, self).to_hash(self, place)
