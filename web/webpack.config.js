@@ -8,17 +8,16 @@ module.exports = {
 	},
 	output: {
 		path: __dirname,
-		filename: 'static/bundle.js'
+		filename: './static/bundle.js'
 	},
 	module: {
-		loaders: [
-		{
-			loader: 'babel-loader',
-			exclude: '/node_modules/',
-			query: {
+		loaders: [{
+			test	: /\.jsx?$/,
+			loader	: 'babel',
+			exclude	: /node_modules/,
+			query	: {
 				presets: ['es2015', 'react']
 			}
-		}
-		]
+		}]
 	}
 };
