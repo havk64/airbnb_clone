@@ -5,12 +5,12 @@ import LeftColumn from './Components/LeftColumn.js';
 import Content from './Components/Content.js';
 import Footer from './Components/Footer.js';
 
-const divStyle = { height: "100%", border: "1px solid yellow" };
-
+const divStyle 	= { height: "100%" };
+const mainStyle	= { height: "100%", marginBottom: "40px" };
 ReactDOM.render(
 		<div style={divStyle}>
 			<Header />
-			<main>
+			<main style={mainStyle}>
 				<LeftColumn />
 				<Content />
 			</main>
