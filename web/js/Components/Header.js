@@ -28,8 +28,6 @@ class Header extends React.Component {
       height		: "100%",
       color		: "#eee"
     }
-    const alt =		"Airbnb Logo"
-    const src =		"./static/Airbnb.png"
 	    
     return <div style={container}>
 	    <Logo />
