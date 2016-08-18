@@ -9,7 +9,7 @@ const Footer = React.createClass({
 			height		: "40px",
 			bottom		: "0px",
 			backgroundColor	: "#fff",
-			borderTop	: "1px solid gray",
+			borderTop	: "2px solid #F2F6F7",
 			textAlign	: "center"
 		}
 		return (
