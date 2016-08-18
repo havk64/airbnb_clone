@@ -7,7 +7,7 @@ class LeftColumn extends React.Component {
 			width		: "300px",
 			height		: "100%",
 			float		: "left",
-			backgroundColor	: "#aaa",
+			backgroundColor	: "#F2F6F7",
 		}
 		return  <div style={columnStyle}>
 			</div>;
