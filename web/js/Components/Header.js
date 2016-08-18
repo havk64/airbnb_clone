@@ -26,7 +26,7 @@ class Header extends React.Component {
 		const rightDiv = {
       			width		: "200px",
       			height		: "100%",
-      			color		: "#eee"
+      			backgroundColor	: "#F2F6F7"
 		}
 		
 		return <header style={header}>
