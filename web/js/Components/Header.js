@@ -13,27 +13,27 @@ class Logo extends React.Component {
 }
 
 class Header extends React.Component {
-  render() {
-    const container = {
-      width		: "100%",
-      height		: "60px",
-      backgroundColor	: "#fff",
-      display		: "flex",
-      flexDirection	: "row",
-      alignItems	: "center",
-      justifyContent	: "space-between"
-    }
-    const rightDiv = {
-      width		: "200px",
-      height		: "100%",
-      color		: "#eee"
-    }
-	    
-    return <div style={container}>
-	    <Logo />
-	    <div style={rightDiv}></div>
-	    </div>;
-  }
+	render() {
+		const header = {
+			width		: "100%",
+      			height		: "60px",
+      			backgroundColor	: "#fff",
+      			display		: "flex",
+      			flexDirection	: "row",
+      			alignItems	: "center",
+      			justifyContent	: "space-between"
+		}
+		const rightDiv = {
+      			width		: "200px",
+      			height		: "100%",
+      			color		: "#eee"
+		}
+		
+		return <header style={header}>
+	    		<Logo />
+	    		<div style={rightDiv}></div>
+	    		</header>;
+	}
 }
 
 export default Header;
