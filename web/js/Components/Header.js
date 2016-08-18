@@ -1,6 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+class Logo extends React.Component {
+	render() {
+		const img = {
+			height: "100px"
+		}
+		const src = "./static/Airbnb.png"
+		const alt = "Airbnb Logo"
+		return <img style={img} src={src} alt={alt} />
+	}
+}
+
 class Header extends React.Component {
   render() {
     const container = {
@@ -11,19 +22,19 @@ class Header extends React.Component {
       flexDirection	: "row",
       alignItems	: "center",
       justifyContent	: "space-between"
-    };
+    }
     const rightDiv = {
       width		: "200px",
       height		: "100%",
       color		: "#eee"
     }
-    const img 	= {
-      height 		: "100px"
-    }
-    return (<div style={container}>
-	    <img style={img} src="./static/Airbnb.png" alt="Airbnb Logo" />
+    const alt =		"Airbnb Logo"
+    const src =		"./static/Airbnb.png"
+	    
+    return <div style={container}>
+	    <Logo />
 	    <div style={rightDiv}></div>
-	    </div>);
+	    </div>;
   }
 }
 
