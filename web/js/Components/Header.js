@@ -1,18 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-class Logo extends React.Component {
+const Logo = React.createClass({
 	render() {
 		const img = {
 			height: "100px"
 		}
 		const src = "./static/Airbnb.png"
 		const alt = "Airbnb Logo"
-		return <img style={img} src={src} alt={alt} />
+		return (
+			<img style={img} src={src} alt={alt} />
+		);
 	}
-}
+});
 
-class Header extends React.Component {
+const Header = React.createClass({
 	render() {
 		const header = {
 			width		: "100%",
@@ -30,11 +32,13 @@ class Header extends React.Component {
       			backgroundColor	: "#F2F6F7"
 		}
 		
-		return <header style={header}>
+		return (
+			<header style={header}>
 	    		<Logo />
 	    		<div style={rightDiv}></div>
-	    		</header>;
+	    		</header>
+		);
 	}
-}
+});
 
 export default Header;

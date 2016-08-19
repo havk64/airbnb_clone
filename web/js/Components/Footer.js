@@ -16,7 +16,7 @@ const Footer = React.createClass({
 			<footer style={footerStyle}>
 				&copy; Alexandro de Oliveira for Holberton School
 			</footer>
-		       )
+		);
 	}
 });
 

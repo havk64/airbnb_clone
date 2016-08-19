@@ -17,4 +17,4 @@ ReactDOM.render(
 			<Footer />
 		</div>,
 		document.getElementById('container')
-	       );
+	);

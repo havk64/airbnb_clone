@@ -10,7 +10,7 @@ const Content = React.createClass({
 		return (
 			<div style={contentStyle}>
 			</div>
-		       );
+		);
 	}
 });
 
