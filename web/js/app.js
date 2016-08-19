@@ -1,3 +1,10 @@
+/* ===-----------------------------------------------------===
+ *	Application entry point
+ *	Rendering React Components
+ *
+ *	by Alexandro de Oliveira, for Holberton School
+ * ===-----------------------------------------------------===	
+ */
 import React 		from 'react';
 import ReactDOM		from 'react-dom';
 import Header		from './Components/Header.js';
