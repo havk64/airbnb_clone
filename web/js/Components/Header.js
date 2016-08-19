@@ -1,3 +1,10 @@
+/* ===-----------------------------------------------------===
+ *	Header Zone for our web application
+ *	Header and Logo are instances of a React Component
+ *
+ *	by Alexandro de Oliveira, for Holberton School
+ * ===-----------------------------------------------------===	
+ */
 import React 	from "react";
 import ReactDOM	from "react-dom";
 
