@@ -1,3 +1,10 @@
+/* ===-----------------------------------------------------===
+ *	Footer Zone for our web application
+ *	Footer is an instance of a React Component
+ *
+ *	by Alexandro de Oliveira, for Holberton School
+ * ===-----------------------------------------------------===	
+ */
 import React 	from 'react';
 import ReactDOM from 'react-dom';
 
