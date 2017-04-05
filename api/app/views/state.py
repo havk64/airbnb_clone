@@ -13,9 +13,9 @@ def get_states():
 
 @app.route('/states', methods = ['POST'])
 @as_json
-def create state():
+def create_state():
     data = request.form
-    name_check = State.select().where(State.name = data['name'])
+    name_check = State.select().where(State.name == data['name'])
     if name_check:
         return {'code': 10000, 'msg': 'State already exists'}, 409
     state = State.create(
