@@ -6,4 +6,4 @@ app.config['JSON_ADD_STATUS'] = False
 
 json = FlaskJSON(app)
 
-from views import *
+from app.views import *
