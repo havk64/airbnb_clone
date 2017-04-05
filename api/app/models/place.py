@@ -4,7 +4,7 @@ from user import User
 from city import City
 
 class Place(BaseModel):
-    """Definition of Place class"""
+    """Definition of Place model"""
     owner = ForeignKeyField(User, related_name = "places")
     city = ForeignKeyField(City, related_name = "places")
     name = CharField(128, null = False)
