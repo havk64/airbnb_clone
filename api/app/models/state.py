@@ -2,7 +2,7 @@ from peewee import CharField
 from base import BaseModel
 
 class State(BaseModel):
-    """State class definition"""
+    """State model definition"""
     name = CharField(128, null = False, unique = True)
 
     def to_hash():
