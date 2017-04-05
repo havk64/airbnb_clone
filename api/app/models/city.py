@@ -7,7 +7,7 @@ class City(BaseModel):
     name = CharField(128, null = False)
     state = ForeignKeyField(State, related_name='cities', on_delete='CASCADE')
 
-    def to_hash():
+    def to_hash(self):
         """Method to_hash returns City object model to hash"""
         state = State.get(State.id == self.state)
         city = {
