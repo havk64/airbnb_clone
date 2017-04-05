@@ -4,7 +4,7 @@ from place  import Place
 from user   import User
 
 class PlaceBook(BaseModel):
-    """Definition of PlacBook Model"""
+    """Definition of PlaceBook Model"""
     place = ForeignKeyField(Place)
     user = ForeignKeyField(User, related_name = "places_booked")
     is_validated = BooleanField(default = False)
