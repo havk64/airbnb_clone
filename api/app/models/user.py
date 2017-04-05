@@ -3,6 +3,7 @@ from base import *
 from hashlib import md5
 
 class User(BaseModel):
+    """User model definition"""
     email = CharField(128, null = False, unique = True)
     password = CharField(128, null = False)
     first_name = CharField(128, null = False)
