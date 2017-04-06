@@ -8,8 +8,8 @@ from datetime import datetime
 @as_json
 def index():
 	"""Output for requests to the root dir"""
-	utc = datetime.utcnow().strftime("%d/%m/%Y %H:%M:%S")
-	now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+	utc = datetime.utcnow().strftime("%Y/%m/%d %H:%M:%S")
+	now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 	return dict(status='OK', utc_time=utc, time=now)
 
 def before_request():
