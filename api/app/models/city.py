@@ -1,6 +1,6 @@
 from peewee import CharField, ForeignKeyField
-from base   import BaseModel
-from state  import State
+from app.models.base   import BaseModel
+from app.models.state  import State
 
 class City(BaseModel):
     """Definition of City Model"""
