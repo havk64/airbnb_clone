@@ -12,15 +12,14 @@ class UserTestCase(unittest.TestCase):
 
 	def tearDown(self):
 		database.drop_table(User)
-
+	# Auxiliary function to return error message for assert function
 	def errormsg(self, expec, *got):
 		return 'Expecting {} but got {}'.format(expec, got)
-
+	# Auxiliary function for creation of user
 	def create_user(self, user, expec):
 		resp = self.app.post('/users', data=user)
 		assert resp.status == expec, self.errormsg(expec, resp.status)
 		return User.select().order_by(User.id.desc()).get()
-
 
 	def test_create(self):
 		users = [
@@ -39,14 +38,15 @@ class UserTestCase(unittest.TestCase):
 
 		count = 1
 		for user in users:
+			# It should create users with sequential ids.
 			last_user = self.create_user(user, '201 CREATED')
 			assert last_user.id == count, self.errormsg(count, last_user.id)
 			count += 1
-
+		# It should return bad request when email is not given.
 		last_user = self.create_user(without_email, '400 BAD REQUEST')
 		assert last_user.email == 'tony@stark.com',\
-		self.errormsg('tony@stark.com', str(last_user.email))
-
+		self.errormsg('tony@stark.com', str(last_user.email)) # user not created
+		# It should return 'CONFLICT' when using duplicated email.
 		last_user = self.create_user(dupl_email, '409 CONFLICT')
 		assert last_user.email == 'tony@stark.com',\
 		self.errormsg('tony@stark.com', str(last_user.email))
