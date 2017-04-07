@@ -1,12 +1,12 @@
 from peewee import *
-from config import *
 from datetime import datetime
+from config import *
 
 database = MySQLDatabase(host       = DATABASE["host"],
                          port       = DATABASE["port"],
                          user       = DATABASE["user"],
                          password   = DATABASE["password"],
-                         database   = DATABASE["database"]) 
+                         database   = DATABASE["database"])
 
 class BaseModel(Model):
     id = PrimaryKeyField(unique=True)
@@ -17,7 +17,7 @@ class BaseModel(Model):
         self.update_at = datetime.now()
         super(BaseModel, self).save()
 
-    def to_hash(model, self, data):
+    def to_hash(self, model, data):
         ''' Returns a hash of the BaseModel in the database '''
         data['id'] = self.id
         data['created_at'] = self.created_at.strftime("%d/%m/%Y %H:%M:%S")
