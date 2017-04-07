@@ -80,14 +80,18 @@ class UserTestCase(unittest.TestCase):
 		assert data['code'] == 404, self.errormsg(404, data['code'])
 
 	def test_delete(self):
+		# It should create user
 		last_user = self.create_user(self.users[0], '201 CREATED')
 		resp = self.app.get('/users/'+str(last_user.id))
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users[0]['email'], last_user.email)
+		# It should delete the user by its ID
 		resp = self.app.delete('/users/{}'.format(last_user.id))
 		data = json.loads(resp.data)
 		assert data['msg'] == 'Deleted successfully', self.errormsg('',data['msg'])
+		# It should return 404 for the delete user
 		resp = self.app.get('/users/{}'.format(last_user.id))
 		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
+		# It should not be possible to delete user not in database
 		resp = self.app.delete('/users/42')
 		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
 		data = json.loads(resp.data)
