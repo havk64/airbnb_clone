@@ -7,7 +7,7 @@ from app import app
 class UserTestCase(unittest.TestCase):
 	def setUp(self):
 		self.app = app.test_client()
-		#logging.disable(logging.CRITICAL)
+		logging.disable(logging.CRITICAL)
 		database.create_tables([User], safe = True)
 		self.users = [
 			{'first_name':'Alexandro','last_name':'de Oliveira',
@@ -54,6 +54,10 @@ class UserTestCase(unittest.TestCase):
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
 		assert len(data) == 0, self.errormsg(0, data)
+		self.create_user(self.users[0],'201 CREATED')
+		resp = self.app.get('/users')
+		data = json.loads(resp.data)
+		assert len(data) > 0, self.errormsg(1, len(data))
 
 		#return 1 if len(data) > 0 else 0
 
@@ -64,7 +68,7 @@ class UserTestCase(unittest.TestCase):
 		# Check that is the same resource as the creation
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
 		data = json.loads(resp.data)
-		assert data['id'] == last_user.id, self.errormsg(last_user.id,dir(data))
+		assert data['id'] == last_user.id, self.errormsg(last_user.id, data['id'])
 		# Check when the user doesn't exist
 		resp = self.app.get('/users/42')
 		data = json.loads(resp.data)
