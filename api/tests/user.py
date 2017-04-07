@@ -9,6 +9,13 @@ class UserTestCase(unittest.TestCase):
 		self.app = app.test_client()
 		#logging.disable(logging.CRITICAL)
 		database.create_tables([User], safe = True)
+		self.users = [
+			{'first_name':'Alexandro','last_name':'de Oliveira',
+                            'email':'alexandro.oliveira@holbertonschool.com',
+                            'password':'123','is_admin':True},
+			{'first_name':'Tony','last_name':'Stark',
+                            'email':'tony@stark.com','password':'456',
+                            'is_admin': False}]
 
 	def tearDown(self):
 		database.drop_table(User)
@@ -22,14 +29,6 @@ class UserTestCase(unittest.TestCase):
 		return User.select().order_by(User.id.desc()).get()
 
 	def test_create(self):
-		users = [
-			{'first_name':'Alexandro','last_name':'de Oliveira',
-                            'email':'alexandro.oliveira@holbertonschool.com',
-                            'password':'123','is_admin':True},
-			{'first_name':'Tony','last_name':'Stark',
-                            'email':'tony@stark.com','password':'456',
-                            'is_admin': False}]
-
 		without_email = {'first_name': 'Jon', 'last_name': 'Snow',
                         'password': '321', 'is_admin': False}
 		dupl_email = {'first_name': 'Cris','last_name': 'Lamarc',
@@ -37,7 +36,7 @@ class UserTestCase(unittest.TestCase):
                         'password': '654', 'is_admin': True}
 
 		count = 1
-		for user in users:
+		for user in self.users:
 			# It should create users with sequential ids.
 			last_user = self.create_user(user, '201 CREATED')
 			assert last_user.id == count, self.errormsg(count, last_user.id)
@@ -54,17 +53,16 @@ class UserTestCase(unittest.TestCase):
 	def test_list(self):
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
-		return 1 if len(data) > 0 else 0
+		assert len(data) == 0, self.errormsg(0, data)
+
+		#return 1 if len(data) > 0 else 0
 
 	def test_get(self):
-		user = {'first_name':'Alexandro','last_name':'de Oliveira',
-        'email':'alexandro.oliveira@holbertonschool.com',
-        'password':'123','is_admin':True}
 		# Check the status code after create user(the assert is inside the function create user)
-		last_user = self.create_user(user, '201 CREATED')
+		last_user = self.create_user(self.users[0], '201 CREATED')
 		resp = self.app.get('/users/'+str(last_user.id))
 		# Check that is the same resource as the creation
-		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
+		assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
 		data = json.loads(resp.data)
 		assert data['id'] == last_user.id, self.errormsg(last_user.id,dir(data))
 		# Check when the user doesn't exist
