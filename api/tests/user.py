@@ -51,15 +51,15 @@ class UserTestCase(unittest.TestCase):
 		self.errormsg('tony@stark.com', str(last_user.email))
 
 	def test_list(self):
+		# Get request to 'users' should return 0 when empty
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
 		assert len(data) == 0, self.errormsg(0, data)
+		# After user creation it should return the number of items
 		self.create_user(self.users[0],'201 CREATED')
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
 		assert len(data) > 0, self.errormsg(1, len(data))
-
-		#return 1 if len(data) > 0 else 0
 
 	def test_get(self):
 		# Check the status code after create user(the assert is inside the function create user)
