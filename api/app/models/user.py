@@ -1,5 +1,5 @@
 from peewee import CharField, BooleanField
-from base import *
+from app.models.base import *
 from hashlib import md5
 
 class User(BaseModel):
