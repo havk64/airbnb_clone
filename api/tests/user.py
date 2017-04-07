@@ -1,4 +1,3 @@
-from datetime import datetime
 import unittest, json, logging
 from app.models.base import database
 from app.models.user import User
