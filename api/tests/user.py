@@ -9,13 +9,16 @@ class UserTestCase(unittest.TestCase):
 		self.app = app.test_client()
 		logging.disable(logging.CRITICAL)
 		database.create_tables([User], safe = True)
+		# Defining users to be used on several tests
 		self.users = [
 			{'first_name':'Alexandro','last_name':'de Oliveira',
                             'email':'alexandro.oliveira@holbertonschool.com',
                             'password':'123','is_admin':True},
 			{'first_name':'Tony','last_name':'Stark',
                             'email':'tony@stark.com','password':'456',
-                            'is_admin': False}]
+                            'is_admin': False},
+			{'first_name':'Jon', 'last_name':'Snow',
+							'email':'jon@snow.com', 'password':'789'}]
 
 	def tearDown(self):
 		database.drop_table(User)
@@ -43,12 +46,12 @@ class UserTestCase(unittest.TestCase):
 			count += 1
 		# It should return bad request when email is not given.
 		last_user = self.create_user(without_email, '400 BAD REQUEST')
-		assert last_user.email == 'tony@stark.com',\
-		self.errormsg('tony@stark.com', str(last_user.email)) # user not created
+		assert last_user.email == 'jon@snow.com',\
+		self.errormsg('jon@snow.com', str(last_user.email)) # user not created
 		# It should return 'CONFLICT' when using duplicated email.
 		last_user = self.create_user(dupl_email, '409 CONFLICT')
-		assert last_user.email == 'tony@stark.com',\
-		self.errormsg('tony@stark.com', str(last_user.email))
+		assert last_user.email == 'jon@snow.com',\
+		self.errormsg('jon@snow.com', str(last_user.email))
 
 	def test_list(self):
 		# Get request to 'users' should return 0 when empty
