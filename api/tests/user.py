@@ -96,3 +96,16 @@ class UserTestCase(unittest.TestCase):
 		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
 		data = json.loads(resp.data)
 		assert data['msg'] == 'User not found', self.errormsg('User not found', data['msg'])
+
+	def test_update(self):
+		user = self.users[0]
+		last_user = self.create_user(user, '201 CREATED')
+		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
+		resp = self.app.put('/users/{}'.format(last_user.id), data={'first_name':'George', 'last_name':'Harrison'})
+		upd_stat = json.loads(resp.data)
+		assert upd_stat['msg'] == 'Updated successfully', self.errormsg('Updated successfully', upd_stat['msg'])
+		resp = self.app.get('users/{}'.format(last_user.id))
+		upd_user = json.loads(resp.data)
+		assert upd_user['first_name'] == 'George', self.errormsg('George',last_user.first_name)
+		resp = self.app.put('/users/{}'.format(last_user.id), data={'email':'new@email.com'})
+		assert resp.status_code == 500, self.errormsg(500,resp.status_code)
