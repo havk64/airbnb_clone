@@ -55,3 +55,13 @@ class UserTestCase(unittest.TestCase):
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
 		return 1 if len(data) > 0 else 0
+
+	def test_get(self):
+		user = {'first_name':'Alexandro','last_name':'de Oliveira',
+        'email':'alexandro.oliveira@holbertonschool.com',
+        'password':'123','is_admin':True}
+		last_user = self.create_user(user, '201 CREATED')
+		resp = self.app.get('/users/'+str(last_user.id))
+		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
+		data = json.loads(resp.data)
+		assert data['id'] == last_user.id, self.errormsg(last_user.id,dir(data))
