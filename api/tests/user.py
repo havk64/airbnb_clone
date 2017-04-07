@@ -60,8 +60,16 @@ class UserTestCase(unittest.TestCase):
 		user = {'first_name':'Alexandro','last_name':'de Oliveira',
         'email':'alexandro.oliveira@holbertonschool.com',
         'password':'123','is_admin':True}
+		# Check the status code after create user(the assert is inside the function create user)
 		last_user = self.create_user(user, '201 CREATED')
 		resp = self.app.get('/users/'+str(last_user.id))
+		# Check that is the same resource as the creation
 		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
 		data = json.loads(resp.data)
 		assert data['id'] == last_user.id, self.errormsg(last_user.id,dir(data))
+		# Check when the user doesn't exist
+		resp = self.app.get('/users/42')
+		data = json.loads(resp.data)
+		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
+		assert data['msg'] == 'User not found', self.errormsg('User not found', data['msg'])
+		assert data['code'] == 404, self.errormsg(404, data['code'])
