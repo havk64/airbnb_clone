@@ -1,5 +1,5 @@
 from peewee import CharField
-from base import BaseModel
+from app.models.base import BaseModel
 
 class State(BaseModel):
     """State model definition"""
