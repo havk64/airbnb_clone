@@ -50,3 +50,8 @@ class UserTestCase(unittest.TestCase):
 		last_user = self.create_user(dupl_email, '409 CONFLICT')
 		assert last_user.email == 'tony@stark.com',\
 		self.errormsg('tony@stark.com', str(last_user.email))
+
+	def test_list(self):
+		resp = self.app.get('/users')
+		data = json.loads(resp.data)
+		return 1 if len(data) > 0 else 0
