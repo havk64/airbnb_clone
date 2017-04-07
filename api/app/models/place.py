@@ -1,7 +1,7 @@
 from peewee import *
-from base import *
-from user import User
-from city import City
+from app.models.base import *
+from app.models.user import User
+from app.models.city import City
 
 class Place(BaseModel):
     """Definition of Place model"""
