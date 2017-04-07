@@ -98,14 +98,18 @@ class UserTestCase(unittest.TestCase):
 		assert data['msg'] == 'User not found', self.errormsg('User not found', data['msg'])
 
 	def test_update(self):
+		# It should create a user and it should be equal to specified user
 		user = self.users[0]
 		last_user = self.create_user(user, '201 CREATED')
 		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
+		# It should return update message when updated
 		resp = self.app.put('/users/{}'.format(last_user.id), data={'first_name':'George', 'last_name':'Harrison'})
 		upd_stat = json.loads(resp.data)
 		assert upd_stat['msg'] == 'Updated successfully', self.errormsg('Updated successfully', upd_stat['msg'])
+		# It should match the updated user with the update request
 		resp = self.app.get('users/{}'.format(last_user.id))
 		upd_user = json.loads(resp.data)
 		assert upd_user['first_name'] == 'George', self.errormsg('George',last_user.first_name)
+		# It should give internal server error when trying to change email
 		resp = self.app.put('/users/{}'.format(last_user.id), data={'email':'new@email.com'})
 		assert resp.status_code == 500, self.errormsg(500,resp.status_code)
