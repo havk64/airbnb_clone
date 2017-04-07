@@ -8,6 +8,6 @@ class Amenity(BaseModel):
     def to_hash(self):
         """Method to_hash returns the Amenity Object model to hash"""
         amenity = {
-            'name'  = self.name,
+            'name': self.name,
         }
         return super(Amenity, self).to_hash(self, amenity)
