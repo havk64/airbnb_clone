@@ -17,7 +17,7 @@ def create_state():
     data = request.form
     name_check = State.select().where(State.name == data['name'])
     if name_check:
-        return {'code': 10000, 'msg': 'State already exists'}, 409
+        return {'code': 10001, 'msg': 'State already exists'}, 409
     state = State.create(
         name = data['name']
     )
