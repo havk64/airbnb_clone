@@ -1,15 +1,11 @@
-import unittest, json, logging
-from app.models.base import database
+from base import BaseTestCase
 from app.models.user import User
 from app import app
+import json
 
-class UserTestCase(unittest.TestCase):
-	def setUp(self):
-		self.app = app.test_client()
-		logging.disable(logging.CRITICAL)
-		database.create_tables([User], safe = True)
-		# Defining users to be used on several tests
-		self.users = [
+class UserTestCase(BaseTestCase):
+	table = User
+	users = [
 			{'first_name':'Alexandro','last_name':'de Oliveira',
                             'email':'alexandro.oliveira@holbertonschool.com',
                             'password':'123','is_admin':True},
@@ -19,12 +15,6 @@ class UserTestCase(unittest.TestCase):
 			{'first_name':'Jon', 'last_name':'Snow',
 							'email':'jon@snow.com', 'password':'789'}]
 
-	def tearDown(self):
-		database.drop_table(User)
-	# Auxiliary function to return error message for assert function
-	def errormsg(self, expec, *got):
-		return 'Expecting {} but got {}'.format(expec, got)
-	# Auxiliary function for creation of user
 	def create_user(self, user, expec):
 		resp = self.app.post('/users', data=user)
 		assert resp.status == expec, self.errormsg(expec, resp.status)
@@ -51,6 +41,10 @@ class UserTestCase(unittest.TestCase):
 		last_user = self.create_user(dupl_email, '409 CONFLICT')
 		assert last_user.email == 'jon@snow.com',\
 		self.errormsg('jon@snow.com', str(last_user.email))
+		# It should return code 10000 when user's email is duplicated
+		resp = self.app.post('/users', data=dupl_email)
+		data = json.loads(resp.data)
+		assert data['code'] == 10000, self.errormsg(10000, data['code'])
 
 	def test_list(self):
 		# Get request to 'users' should return 0 when empty
