@@ -66,7 +66,7 @@ class UserTestCase(unittest.TestCase):
 	def test_get(self):
 		# Check the status code after create user(the assert is inside the function create user)
 		last_user = self.create_user(self.users[0], '201 CREATED')
-		resp = self.app.get('/users/'+str(last_user.id))
+		resp = self.app.get('/users/{}'.format(last_user.id))
 		# Check that is the same resource as the creation
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
 		data = json.loads(resp.data)
@@ -81,7 +81,7 @@ class UserTestCase(unittest.TestCase):
 	def test_delete(self):
 		# It should create user
 		last_user = self.create_user(self.users[0], '201 CREATED')
-		resp = self.app.get('/users/'+str(last_user.id))
+		resp = self.app.get('/users/{}'.format(last_user.id))
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users[0]['email'], last_user.email)
 		# It should delete the user by its ID
 		resp = self.app.delete('/users/{}'.format(last_user.id))
