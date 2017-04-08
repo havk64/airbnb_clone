@@ -32,3 +32,10 @@ class BaseTestCase(unittest.TestCase):
         resp = self.app.get(self.path)
         data = json.loads(resp.data)
         assert len(data) > 0, self.errormsg(1, len(data))
+
+    def check_dupl_entry(self, data, code):
+        last_entry = self.create_row(data, '409 CONFLICT')
+        resp = self.app.post(self.path, data=data)
+        data = json.loads(resp.data)
+        self.check(data['code'], code)
+        return last_entry
