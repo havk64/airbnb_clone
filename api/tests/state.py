@@ -1,5 +1,4 @@
 from base import BaseTestCase
-from app.models.base import database
 from app.models.state import State
 import json
 
@@ -11,6 +10,8 @@ class StateTestCase(BaseTestCase):
 			{'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
 		]
 
+	example = states[0]
+
 	def test_create(self):
 		# It should create states with sequential ids.
 		count = 1
@@ -19,26 +20,15 @@ class StateTestCase(BaseTestCase):
 			assert last_state.id == count, self.errormsg(count, last_state.id)
 			assert last_state.name == state['name'], self.errormsg(state['name'], last_state.id)
 			count += 1
-		# It should return 'CONFLICT' when using duplicated state name.
-		dupl_state = 'California'
-		last_state = self.create_row({'name': dupl_state}, '409 CONFLICT')
+		# It should return code 10001 when trying to create duplicated state name.
+		dupl_state = {'name': 'California'}
+		last_state = self.check_dupl_entry(dupl_state, 10001)
 		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
-		# It should return code 10001 when state is duplicated
-		resp = self.app.post('/states', data={'name': dupl_state})
-		data = json.loads(resp.data)
-		assert data['code'] == 10001, self.errormsg(10001, data['code'])
+
 
 	def test_list(self):
-		# When empty it should return 0 to the Get request
-		resp = self.app.get('/states')
-		data = json.loads(resp.data)
-		assert len(data) == 0, self.errormsg(0, data)
-		# After creation of state it should return the amont of items
-		last_state = self.create_row(self.states[0], '201 CREATED')
-		resp = self.app.get('/states')
-		data = json.loads(resp.data)
-		assert len(data) > 0, self.errormsg(1, len(data))
+		self.list_test()
 
 	def test_get(self):
 		last_state = self.create_row(self.states[0], '201 CREATED')
