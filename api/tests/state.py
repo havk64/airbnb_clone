@@ -37,3 +37,14 @@ class StateTestCase(unittest.TestCase):
 		last_state = self.create_state({'name': dupl_state}, '409 CONFLICT')
 		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
+
+	def test_list(self):
+		# When empty it should return 0 to the Get request
+		resp = self.app.get('/states')
+		data = json.loads(resp.data)
+		assert len(data) == 0, self.errormsg(0, data)
+		# After creation of state it should return the amont of items
+		last_state = self.create_state(self.states[0], '201 CREATED')
+		resp = self.app.get('/states')
+		data = json.loads(resp.data)
+		assert len(data) > 0, self.errormsg(1, len(data))
