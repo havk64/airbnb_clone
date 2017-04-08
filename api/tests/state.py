@@ -1,40 +1,27 @@
-import unittest, json, logging
+from base import BaseTestCase
 from app.models.base import database
 from app.models.state import State
-from app import app
+import json
 
-class StateTestCase(unittest.TestCase):
-	def setUp(self):
-		self.app = app.test_client()
-		logging.disable(logging.CRITICAL)
-		database.create_tables([State], safe = True)
-		self.states = [
+class StateTestCase(BaseTestCase):
+	table = State
+	path = '/states'
+	states = [
 			{'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
 			{'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
 		]
-
-	def tearDown(self):
-		database.drop_table(State)
-
-	def errormsg(self, expec, *got):
-		return 'Expecting {} but got {}'.format(expec, got)
-
-	def create_state(self, state, expec):
-		resp = self.app.post('/states', data=state)
-		assert resp.status == expec, self.errormsg(expec, resp.status)
-		return State.select().order_by(State.id.desc()).get()
 
 	def test_create(self):
 		# It should create states with sequential ids.
 		count = 1
 		for state in self.states:
-			last_state = self.create_state(state, '201 CREATED')
+			last_state = self.create_row(state, '201 CREATED')
 			assert last_state.id == count, self.errormsg(count, last_state.id)
 			assert last_state.name == state['name'], self.errormsg(state['name'], last_state.id)
 			count += 1
 		# It should return 'CONFLICT' when using duplicated state name.
 		dupl_state = 'California'
-		last_state = self.create_state({'name': dupl_state}, '409 CONFLICT')
+		last_state = self.create_row({'name': dupl_state}, '409 CONFLICT')
 		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
 		# It should return code 10001 when state is duplicated
@@ -48,13 +35,13 @@ class StateTestCase(unittest.TestCase):
 		data = json.loads(resp.data)
 		assert len(data) == 0, self.errormsg(0, data)
 		# After creation of state it should return the amont of items
-		last_state = self.create_state(self.states[0], '201 CREATED')
+		last_state = self.create_row(self.states[0], '201 CREATED')
 		resp = self.app.get('/states')
 		data = json.loads(resp.data)
 		assert len(data) > 0, self.errormsg(1, len(data))
 
 	def test_get(self):
-		last_state = self.create_state(self.states[0], '201 CREATED')
+		last_state = self.create_row(self.states[0], '201 CREATED')
 		resp = self.app.get('/states/{}'.format(last_state.id))
 		# Check that is the same resource as the creation
 		assert last_state.name == self.states[0]['name'], self.errormsg(self.users['name'], last_state.name)
@@ -69,7 +56,7 @@ class StateTestCase(unittest.TestCase):
 
 	def test_delete(self):
 		# It should create state
-		last_state = self.create_state(self.states[0], '201 CREATED')
+		last_state = self.create_row(self.states[0], '201 CREATED')
 		resp = self.app.get('/states/{}'.format(last_state.id))
 		assert last_state.name == self.states[0]['name'], self.errormsg(self.states[0]['name'], last_state.name)
 		# It should delete the state by its ID
