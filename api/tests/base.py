@@ -1,4 +1,4 @@
-import unittest, logging
+import unittest, logging, json
 from app.models.base import database
 from app import app
 
@@ -21,3 +21,14 @@ class BaseTestCase(unittest.TestCase):
         resp = self.app.post(self.path, data=data)
         self.check(resp.status, expec)
         return self.table.select().order_by(self.table.id.desc()).get()
+
+    def list_test(self):
+        # Get request to the table should return 0 when empty
+        resp = self.app.get(self.path)
+        data = json.loads(resp.data)
+        self.check(len(data),0)
+        # After item creation it should return the number of items
+        self.create_row(self.example,'201 CREATED')
+        resp = self.app.get(self.path)
+        data = json.loads(resp.data)
+        assert len(data) > 0, self.errormsg(1, len(data))
