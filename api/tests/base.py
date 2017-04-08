@@ -39,3 +39,17 @@ class BaseTestCase(unittest.TestCase):
         resp = self.app.get(self.path)
         data = json.loads(resp.data)
         assert len(data) > 0, self.errormsg(1, len(data))
+
+    def check_get(self, tname):
+        # Check the status code after create user(the assert is inside the function create user)
+        last_entry = self.create_row(self.example, '201 CREATED')
+        resp = self.app.get('{}/{}'.format(self.path, last_entry.id))
+        data = json.loads(resp.data)
+        # Check that is the same resource as the creation
+        self.check(data['id'], last_entry.id)
+        # Check when the item doesn't exist
+        resp = self.app.get('{}/42'.format(self.path))
+        data = json.loads(resp.data)
+        self.check(resp.status_code, 404) # Check the http status code
+        self.check(data['msg'], '{} not found'.format(tname)) # Check returned msg
+        self.check(data['code'], 404) # Check returned code(from json response)
