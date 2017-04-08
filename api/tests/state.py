@@ -37,6 +37,10 @@ class StateTestCase(unittest.TestCase):
 		last_state = self.create_state({'name': dupl_state}, '409 CONFLICT')
 		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
+		# It should return code 10001 when state is duplicated
+		resp = self.app.post('/states', data={'name': dupl_state})
+		data = json.loads(resp.data)
+		assert data['code'] == 10001, self.errormsg(10001, data['code'])
 
 	def test_list(self):
 		# When empty it should return 0 to the Get request
