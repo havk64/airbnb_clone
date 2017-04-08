@@ -53,3 +53,23 @@ class BaseTestCase(unittest.TestCase):
         self.check(resp.status_code, 404) # Check the http status code
         self.check(data['msg'], '{} not found'.format(tname)) # Check returned msg
         self.check(data['code'], 404) # Check returned code(from json response)
+
+
+    def check_delete(self, tname):
+        last_entry = self.create_row(self.example, '201 CREATED')
+        resp = self.app.get('{}/{}'.format(self.path, last_entry.id))
+        data = json.loads(resp.data)
+        # Check that is the same resource as the creation
+        self.check(data['id'], last_entry.id)
+        # It should delete the item by its ID
+        resp = self.app.delete('{}/{}'.format(self.path, last_entry.id))
+        data = json.loads(resp.data)
+        self.check(data['msg'], 'Deleted successfully')
+        # It should return 404 for the delete item
+        resp = self.app.get('{}/{}'.format(self.path, last_entry.id))
+        self.check(resp.status_code, 404)
+        # It should not be possible to delete item not in the database
+        resp = self.app.delete('{}/42'.format(self.path))
+        self.check(resp.status_code, 404)
+        data = json.loads(resp.data)
+        self.check(data['msg'], '{} not found'.format(tname))
