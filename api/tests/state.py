@@ -25,12 +25,15 @@ class StateTestCase(unittest.TestCase):
 		return State.select().order_by(State.id.desc()).get()
 
 	def test_create(self):
+		# It should create states with sequential ids.
 		count = 1
 		for state in self.states:
 			last_state = self.create_state(state, '201 CREATED')
 			assert last_state.id == count, self.errormsg(count, last_state.id)
 			assert last_state.name == state['name'], self.errormsg(state['name'], last_state.id)
 			count += 1
+		# It should return 'CONFLICT' when using duplicated state name.
 		dupl_state = 'California'
 		last_state = self.create_state({'name': dupl_state}, '409 CONFLICT')
+		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
