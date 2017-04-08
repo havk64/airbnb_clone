@@ -23,22 +23,22 @@ def create_state():
     )
     return {'code': 201,'msg': 'State was created successfully'}, 201
 
-@app.route('/states/<int:number>', methods = ['GET'])
+@app.route('/states/<int:id>', methods = ['GET'])
 @as_json
-def get_state(number):
+def get_state(id):
     try:
-        state = State.get(State.id == number)
+        state = State.get(State.id == id)
     except Exception as e:
         return {'code': 404, 'msg': "State not found"}, 404
 
     return state.to_hash(), 200
 
-@app.route('/states/<int:number>', methods = ['DELETE'])
+@app.route('/states/<int:id>', methods = ['DELETE'])
 @as_json
-def del_state(number):
-    id_check = State.select().where(State.id == number)
+def del_state(id):
+    id_check = State.select().where(State.id == id)
     if not id_check:
-        return {'code': 404, 'msg': 'User not found'}, 404
+        return {'code': 404, 'msg': 'State not found'}, 404
 
     item = State.delete().where(State.id == id)
     item.execute()
