@@ -48,3 +48,17 @@ class StateTestCase(unittest.TestCase):
 		resp = self.app.get('/states')
 		data = json.loads(resp.data)
 		assert len(data) > 0, self.errormsg(1, len(data))
+
+	def test_get(self):
+		last_state = self.create_state(self.states[0], '201 CREATED')
+		resp = self.app.get('/states/{}'.format(last_state.id))
+		# Check that is the same resource as the creation
+		assert last_state.name == self.states[0]['name'], self.errormsg(self.users['name'], last_state.name)
+		data = json.loads(resp.data)
+		assert data['id'] == last_state.id, self.errormsg(last_state.id, data['id'])
+		# Check when the user doesn't exist
+		resp = self.app.get('/states/42')
+		data = json.loads(resp.data)
+		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
+		assert data['msg'] == 'State not found', self.errormsg('State not found', data['msg'])
+		assert data['code'] == 404, self.errormsg(404, data['code'])
