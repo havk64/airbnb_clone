@@ -1,10 +1,10 @@
 from base import BaseTestCase
 from app.models.user import User
-from app import app
 import json
 
 class UserTestCase(BaseTestCase):
 	table = User
+	path = '/users'
 	users = [
 			{'first_name':'Alexandro','last_name':'de Oliveira',
                             'email':'alexandro.oliveira@holbertonschool.com',
@@ -14,11 +14,6 @@ class UserTestCase(BaseTestCase):
                             'is_admin': False},
 			{'first_name':'Jon', 'last_name':'Snow',
 							'email':'jon@snow.com', 'password':'789'}]
-
-	def create_user(self, user, expec):
-		resp = self.app.post('/users', data=user)
-		assert resp.status == expec, self.errormsg(expec, resp.status)
-		return User.select().order_by(User.id.desc()).get()
 
 	def test_create(self):
 		without_email = {'first_name': 'Jon', 'last_name': 'Snow',
@@ -30,15 +25,15 @@ class UserTestCase(BaseTestCase):
 		count = 1
 		for user in self.users:
 			# It should create users with sequential ids.
-			last_user = self.create_user(user, '201 CREATED')
-			assert last_user.id == count, self.errormsg(count, last_user.id)
+			last_user = self.create_row(user, '201 CREATED')
+			self.check(last_user.id, count)
 			count += 1
 		# It should return bad request when email is not given.
-		last_user = self.create_user(without_email, '400 BAD REQUEST')
+		last_user = self.create_row(without_email, '400 BAD REQUEST')
 		assert last_user.email == 'jon@snow.com',\
 		self.errormsg('jon@snow.com', str(last_user.email)) # user not created
 		# It should return 'CONFLICT' when using duplicated email.
-		last_user = self.create_user(dupl_email, '409 CONFLICT')
+		last_user = self.create_row(dupl_email, '409 CONFLICT')
 		assert last_user.email == 'jon@snow.com',\
 		self.errormsg('jon@snow.com', str(last_user.email))
 		# It should return code 10000 when user's email is duplicated
@@ -52,14 +47,14 @@ class UserTestCase(BaseTestCase):
 		data = json.loads(resp.data)
 		assert len(data) == 0, self.errormsg(0, data)
 		# After user creation it should return the number of items
-		self.create_user(self.users[0],'201 CREATED')
+		self.create_row(self.users[0],'201 CREATED')
 		resp = self.app.get('/users')
 		data = json.loads(resp.data)
 		assert len(data) > 0, self.errormsg(1, len(data))
 
 	def test_get(self):
 		# Check the status code after create user(the assert is inside the function create user)
-		last_user = self.create_user(self.users[0], '201 CREATED')
+		last_user = self.create_row(self.users[0], '201 CREATED')
 		resp = self.app.get('/users/{}'.format(last_user.id))
 		# Check that is the same resource as the creation
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
@@ -74,7 +69,7 @@ class UserTestCase(BaseTestCase):
 
 	def test_delete(self):
 		# It should create user
-		last_user = self.create_user(self.users[0], '201 CREATED')
+		last_user = self.create_row(self.users[0], '201 CREATED')
 		resp = self.app.get('/users/{}'.format(last_user.id))
 		assert last_user.email == self.users[0]['email'], self.errormsg(self.users[0]['email'], last_user.email)
 		# It should delete the user by its ID
@@ -93,7 +88,7 @@ class UserTestCase(BaseTestCase):
 	def test_update(self):
 		# It should create a user and it should be equal to specified user
 		user = self.users[0]
-		last_user = self.create_user(user, '201 CREATED')
+		last_user = self.create_row(user, '201 CREATED')
 		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
 		# It should return update message when updated
 		resp = self.app.put('/users/{}'.format(last_user.id), data={'first_name':'George', 'last_name':'Harrison'})
