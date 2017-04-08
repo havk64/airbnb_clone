@@ -22,7 +22,14 @@ class BaseTestCase(unittest.TestCase):
         self.check(resp.status, expec)
         return self.table.select().order_by(self.table.id.desc()).get()
 
-    def list_test(self):
+    def check_dupl_entry(self, data, code):
+        last_entry = self.create_row(data, '409 CONFLICT')
+        resp = self.app.post(self.path, data=data)
+        data = json.loads(resp.data)
+        self.check(data['code'], code)
+        return last_entry
+
+    def check_list(self):
         # Get request to the table should return 0 when empty
         resp = self.app.get(self.path)
         data = json.loads(resp.data)
@@ -32,10 +39,3 @@ class BaseTestCase(unittest.TestCase):
         resp = self.app.get(self.path)
         data = json.loads(resp.data)
         assert len(data) > 0, self.errormsg(1, len(data))
-
-    def check_dupl_entry(self, data, code):
-        last_entry = self.create_row(data, '409 CONFLICT')
-        resp = self.app.post(self.path, data=data)
-        data = json.loads(resp.data)
-        self.check(data['code'], code)
-        return last_entry
