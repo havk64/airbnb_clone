@@ -62,3 +62,21 @@ class StateTestCase(unittest.TestCase):
 		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
 		assert data['msg'] == 'State not found', self.errormsg('State not found', data['msg'])
 		assert data['code'] == 404, self.errormsg(404, data['code'])
+
+	def test_delete(self):
+		# It should create state
+		last_state = self.create_state(self.states[0], '201 CREATED')
+		resp = self.app.get('/states/{}'.format(last_state.id))
+		assert last_state.name == self.states[0]['name'], self.errormsg(self.states[0]['name'], last_state.name)
+		# It should delete the state by its ID
+		resp = self.app.delete('/states/{}'.format(last_state.id))
+		data = json.loads(resp.data)
+		assert data['msg'] == 'Deleted successfully', self.errormsg('',data['msg'])
+		# It should return 404 for the delete state
+		resp = self.app.get('/states/{}'.format(last_state.id))
+		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
+		# It should not be possible to delete state not in database
+		resp = self.app.delete('/states/42')
+		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
+		data = json.loads(resp.data)
+		assert data['msg'] == 'State not found', self.errormsg('State not found', data['msg'])
