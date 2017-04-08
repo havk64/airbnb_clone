@@ -5,7 +5,7 @@ class State(BaseModel):
     """State model definition"""
     name = CharField(128, null = False, unique = True)
 
-    def to_hash():
+    def to_hash(self):
         """Method to return the hash of State object model"""
         state = {
 				'name': self.name
