@@ -41,22 +41,10 @@ class UserTestCase(BaseTestCase):
 		# It should return code 10000 when user's email is duplicated
 
 	def test_list(self):
-		self.list_test()
+		self.check_list()
 
 	def test_get(self):
-		# Check the status code after create user(the assert is inside the function create user)
-		last_user = self.create_row(self.users[0], '201 CREATED')
-		resp = self.app.get('/users/{}'.format(last_user.id))
-		# Check that is the same resource as the creation
-		assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
-		data = json.loads(resp.data)
-		assert data['id'] == last_user.id, self.errormsg(last_user.id, data['id'])
-		# Check when the user doesn't exist
-		resp = self.app.get('/users/42')
-		data = json.loads(resp.data)
-		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
-		assert data['msg'] == 'User not found', self.errormsg('User not found', data['msg'])
-		assert data['code'] == 404, self.errormsg(404, data['code'])
+		self.check_get('User')
 
 	def test_delete(self):
 		# It should create user
