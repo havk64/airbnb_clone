@@ -1,5 +1,6 @@
 from base import BaseTestCase
 from app.models.user import User
+from app import app
 import json
 
 class UserTestCase(BaseTestCase):
@@ -14,6 +15,7 @@ class UserTestCase(BaseTestCase):
                             'is_admin': False},
 			{'first_name':'Jon', 'last_name':'Snow',
 							'email':'jon@snow.com', 'password':'789'}]
+	example = users[0]
 
 	def test_create(self):
 		without_email = {'first_name': 'Jon', 'last_name': 'Snow',
@@ -32,25 +34,14 @@ class UserTestCase(BaseTestCase):
 		last_user = self.create_row(without_email, '400 BAD REQUEST')
 		assert last_user.email == 'jon@snow.com',\
 		self.errormsg('jon@snow.com', str(last_user.email)) # user not created
-		# It should return 'CONFLICT' when using duplicated email.
-		last_user = self.create_row(dupl_email, '409 CONFLICT')
+		# It should return code 10001 when trying to create user with duplicated email
+		last_user = self.check_dupl_entry(dupl_email, 10000)
 		assert last_user.email == 'jon@snow.com',\
 		self.errormsg('jon@snow.com', str(last_user.email))
 		# It should return code 10000 when user's email is duplicated
-		resp = self.app.post('/users', data=dupl_email)
-		data = json.loads(resp.data)
-		assert data['code'] == 10000, self.errormsg(10000, data['code'])
 
 	def test_list(self):
-		# Get request to 'users' should return 0 when empty
-		resp = self.app.get('/users')
-		data = json.loads(resp.data)
-		assert len(data) == 0, self.errormsg(0, data)
-		# After user creation it should return the number of items
-		self.create_row(self.users[0],'201 CREATED')
-		resp = self.app.get('/users')
-		data = json.loads(resp.data)
-		assert len(data) > 0, self.errormsg(1, len(data))
+		self.list_test()
 
 	def test_get(self):
 		# Check the status code after create user(the assert is inside the function create user)
