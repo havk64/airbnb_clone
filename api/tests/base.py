@@ -6,10 +6,11 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         logging.disable(logging.CRITICAL)
-        database.create_tables([self.table], safe=True)
+        database.create_tables(self.table, safe=True)
 
     def tearDown(self):
-        database.drop_table(self.table)
+        for db in self.table:
+            database.drop_table(db)
 
     def errormsg(self, expec, *got):
         return 'Expecting {} but got {}'.format(expec, got)
@@ -20,7 +21,7 @@ class BaseTestCase(unittest.TestCase):
     def create_row(self, data, expec):
         resp = self.app.post(self.path, data=data)
         self.check(resp.status, expec)
-        return self.table.select().order_by(self.table.id.desc()).get()
+        return self.table[0].select().order_by(self.table[0].id.desc()).get()
 
     def check_dupl_entry(self, data, code):
         last_entry = self.create_row(data, '409 CONFLICT')
