@@ -26,27 +26,12 @@ class StateTestCase(BaseTestCase):
 		# The last entry on database should be the previous one
 		assert last_state.name == 'District of Columbia', self.errormsg('District of Columbia',last_state.name)
 
-
 	def test_list(self):
 		self.check_list()
 
 	def test_get(self):
 		self.check_get('State')
+		# assert last_state.name == self.states[0]['name'], self.errormsg(self.users['name'], last_state.name)
 
 	def test_delete(self):
-		# It should create state
-		last_state = self.create_row(self.states[0], '201 CREATED')
-		resp = self.app.get('/states/{}'.format(last_state.id))
-		assert last_state.name == self.states[0]['name'], self.errormsg(self.states[0]['name'], last_state.name)
-		# It should delete the state by its ID
-		resp = self.app.delete('/states/{}'.format(last_state.id))
-		data = json.loads(resp.data)
-		assert data['msg'] == 'Deleted successfully', self.errormsg('',data['msg'])
-		# It should return 404 for the delete state
-		resp = self.app.get('/states/{}'.format(last_state.id))
-		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
-		# It should not be possible to delete state not in database
-		resp = self.app.delete('/states/42')
-		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
-		data = json.loads(resp.data)
-		assert data['msg'] == 'State not found', self.errormsg('State not found', data['msg'])
+		self.check_delete('State')
