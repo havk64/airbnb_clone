@@ -23,6 +23,11 @@ class BaseTestCase(unittest.TestCase):
         self.check(resp.status, expec)
         return self.table[0].select().order_by(self.table[0].id.desc()).get()
 
+    def create(self, table, data):
+        resp = self.app.post(table['path'], data=data)
+        self.check(resp.status, '201 CREATED')
+        return table['model'].select().order_by(table['model'].id.desc()).get()
+
     def check_dupl_entry(self, data, code):
         last_entry = self.create_row(data, '409 CONFLICT')
         resp = self.app.post(self.path, data=data)
