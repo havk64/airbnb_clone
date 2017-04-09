@@ -7,11 +7,10 @@ from flask_json import as_json, request, jsonify
 @as_json
 def get_cities(id):
     cities = []
-    #query = City.select(State.id == id)
     query = City.select().join(State).where(State.id == id)
     for i in query:
         cities.append(i.to_hash())
-    #return {'msg':jsonify(cities)}, 200
+
     return jsonify(cities)
 
 @app.route('/states/<int:id>/cities', methods=['POST'])
