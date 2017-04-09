@@ -73,3 +73,16 @@ class BaseTestCase(unittest.TestCase):
         self.check(resp.status_code, 404)
         data = json.loads(resp.data)
         self.check(data['msg'], '{} not found'.format(tname))
+
+    def check_update(self, data):
+        # It should create an item
+        last_entry = self.create_row(self.example, '201 CREATED')
+        # It should return update message when the update was executed successfully
+        resp = self.app.put('{}/{}'.format(self.path, last_entry.id), data=data)
+        upd_stat = json.loads(resp.data)
+        self.check(upd_stat['msg'], 'Updated successfully')
+        # The later request should show the updated item
+        resp = self.app.get('{}/{}'.format(self.path, last_entry.id))
+        upd_item = json.loads(resp.data)
+        for key in data:
+            self.check(upd_item[key], data[key])
