@@ -1,10 +1,9 @@
 from base import BaseTestCase
 from app.models.user import User
-from app import app
 import json
 
 class UserTestCase(BaseTestCase):
-	table = User
+	table = [User]
 	path = '/users'
 	users = [
 			{'first_name':'Alexandro','last_name':'de Oliveira',
