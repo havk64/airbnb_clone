@@ -3,7 +3,7 @@ from app.models.state import State
 import json
 
 class StateTestCase(BaseTestCase):
-	table = State
+	table = [State]
 	path = '/states'
 	states = [
 			{'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
