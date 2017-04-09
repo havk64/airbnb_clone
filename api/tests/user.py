@@ -45,38 +45,15 @@ class UserTestCase(BaseTestCase):
 
 	def test_get(self):
 		self.check_get('User')
+        # assert last_user.email == self.users[0]['email'], self.errormsg(self.users['email'], last_user.email)
 
 	def test_delete(self):
-		# It should create user
-		last_user = self.create_row(self.users[0], '201 CREATED')
-		resp = self.app.get('/users/{}'.format(last_user.id))
-		assert last_user.email == self.users[0]['email'], self.errormsg(self.users[0]['email'], last_user.email)
-		# It should delete the user by its ID
-		resp = self.app.delete('/users/{}'.format(last_user.id))
-		data = json.loads(resp.data)
-		assert data['msg'] == 'Deleted successfully', self.errormsg('',data['msg'])
-		# It should return 404 for the delete user
-		resp = self.app.get('/users/{}'.format(last_user.id))
-		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
-		# It should not be possible to delete user not in database
-		resp = self.app.delete('/users/42')
-		assert resp.status_code == 404, self.errormsg(404, resp.status_code)
-		data = json.loads(resp.data)
-		assert data['msg'] == 'User not found', self.errormsg('User not found', data['msg'])
+		self.check_delete('User')
 
 	def test_update(self):
-		# It should create a user and it should be equal to specified user
-		user = self.users[0]
-		last_user = self.create_row(user, '201 CREATED')
-		assert last_user.email == user['email'], self.errormsg(user['email'], last_user.email)
-		# It should return update message when updated
-		resp = self.app.put('/users/{}'.format(last_user.id), data={'first_name':'George', 'last_name':'Harrison'})
-		upd_stat = json.loads(resp.data)
-		assert upd_stat['msg'] == 'Updated successfully', self.errormsg('Updated successfully', upd_stat['msg'])
-		# It should match the updated user with the update request
-		resp = self.app.get('users/{}'.format(last_user.id))
-		upd_user = json.loads(resp.data)
-		assert upd_user['first_name'] == 'George', self.errormsg('George',last_user.first_name)
+		upd_data = {'first_name':'George', 'last_name':'Harrison'}
+		self.check_update(upd_data)
+
 		# It should give internal server error when trying to change email
-		resp = self.app.put('/users/{}'.format(last_user.id), data={'email':'new@email.com'})
-		assert resp.status_code == 500, self.errormsg(500,resp.status_code)
+		resp = self.app.put('{}/{}'.format(self.path, 1), data={'email':'new@email.com'})
+		self.check(resp.status_code, 500)
