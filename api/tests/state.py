@@ -1,21 +1,17 @@
 from base import BaseTestCase
 from app.models.state import State
+from fixtures import states
 import json
 
 class StateTestCase(BaseTestCase):
 	table = [State]
 	path = '/states'
-	states = [
-			{'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
-			{'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
-		]
-
 	example = states[0]
 
 	def test_create(self):
 		# It should create states with sequential ids.
 		count = 1
-		for state in self.states:
+		for state in states:
 			last_state = self.create_row(state, '201 CREATED')
 			assert last_state.id == count, self.errormsg(count, last_state.id)
 			assert last_state.name == state['name'], self.errormsg(state['name'], last_state.id)
@@ -31,7 +27,6 @@ class StateTestCase(BaseTestCase):
 
 	def test_get(self):
 		self.check_get('State')
-		# assert last_state.name == self.states[0]['name'], self.errormsg(self.users['name'], last_state.name)
 
 	def test_delete(self):
 		self.check_delete('State')

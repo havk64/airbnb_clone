@@ -17,5 +17,6 @@ dupl_email = {'first_name': 'Cris','last_name': 'Lamarc',
               'email': 'alexandro.oliveira@holbertonschool.com',
               'password': '654', 'is_admin': True}
 states = [
-    {}
+    {'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
+	{'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
 ]
