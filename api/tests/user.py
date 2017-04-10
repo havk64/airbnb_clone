@@ -1,7 +1,6 @@
 from base import BaseTestCase
 from app.models.user import User
 from fixtures import *
-import json
 
 class UserTestCase(BaseTestCase):
 	table = [User]

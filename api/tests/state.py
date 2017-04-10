@@ -1,7 +1,6 @@
 from base import BaseTestCase
 from app.models.state import State
 from fixtures import fixt_states
-import json
 
 class StateTestCase(BaseTestCase):
 	table = [State]

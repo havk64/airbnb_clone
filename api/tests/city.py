@@ -2,7 +2,6 @@ from base import BaseTestCase
 from app.models.city import City
 from app.models.state import State
 from fixtures import fixt_states, fixt_cities
-import json
 
 class CityTestCase(BaseTestCase):
     table = [City, State]
