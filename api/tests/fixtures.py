@@ -1,6 +1,6 @@
-"""Data collection for tests
+"""Fixtures for unit tests
 """
-users = [
+fixt_users = [
     {'first_name':'Alexandro', 'last_name':'de Oliveira',
      'email':'alexandro.oliveira@holbertonschool.com',
      'password':'123', 'is_admin':True},
@@ -11,12 +11,12 @@ users = [
      'email':'jon@snow.com', 'password':'789'}
 ]
 
-user_bad_req = {'first_name': 'Jon', 'last_name': 'Snow',
+fixt_bad_req = {'first_name': 'Jon', 'last_name': 'Snow',
                 'password': '321', 'is_admin': False}
-dupl_email = {'first_name': 'Cris','last_name': 'Lamarc',
+fixt_dupl_email = {'first_name': 'Cris','last_name': 'Lamarc',
               'email': 'alexandro.oliveira@holbertonschool.com',
               'password': '654', 'is_admin': True}
-states = [
+fixt_states = [
     {'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
-	{'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
+    {'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
 ]
