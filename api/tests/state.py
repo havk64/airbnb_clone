@@ -1,17 +1,17 @@
 from base import BaseTestCase
 from app.models.state import State
-from fixtures import states
+from fixtures import fixt_states
 import json
 
 class StateTestCase(BaseTestCase):
 	table = [State]
 	path = '/states'
-	example = states[0]
+	example = fixt_states[0]
 
 	def test_create(self):
 		# It should create states with sequential ids.
 		count = 1
-		for state in states:
+		for state in fixt_states:
 			last_state = self.create_row(state, '201 CREATED')
 			self.check(last_state.id, count)
 			self.check(last_state.name, state['name'])

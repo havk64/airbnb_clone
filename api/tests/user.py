@@ -6,20 +6,20 @@ import json
 class UserTestCase(BaseTestCase):
 	table = [User]
 	path = '/users'
-	example = users[0]
+	example = fixt_users[0]
 
 	def test_create(self):
 		count = 1
-		for user in users:
+		for user in fixt_users:
 			# It should create users with sequential ids.
 			last_user = self.create_row(user, '201 CREATED')
 			self.check(last_user.id, count)
 			count += 1
 		# It should return bad request when email is not given.
-		last_user = self.create_row(user_bad_req, '400 BAD REQUEST')
+		last_user = self.create_row(fixt_bad_req, '400 BAD REQUEST')
 		self.check(last_user.email, 'jon@snow.com') # user not created
 		# It should return code 10001 when trying to create user with duplicated email
-		last_user = self.check_dupl_entry(dupl_email, 10000)
+		last_user = self.check_dupl_entry(fixt_dupl_email, 10000)
 		self.check(last_user.email, 'jon@snow.com')
 
 	def test_list(self):
