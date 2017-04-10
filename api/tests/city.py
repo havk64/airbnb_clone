@@ -1,28 +1,24 @@
 from base import BaseTestCase
 from app.models.city import City
 from app.models.state import State
+from fixtures import fixt_states, fixt_cities
 import json
 
 class CityTestCase(BaseTestCase):
     table = [City, State]
     path = '/states/1/cities'
-    states = [
-            {'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
-            {'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
-            ]
-    cities = [{'name': 'San Francisco'}, {'name': 'Sacramento'}, {'name': 'Berkeley'}]
-    example = cities[0]
+    example = fixt_cities[0]
 
     def create_states(self):
         state_table = {'model': State, 'path':'/states'}
-        for state in self.states:
+        for state in fixt_states:
             last_state = self.create(state_table, state)
 
     def test_create(self):
         self.create_states()
         count = 1
 
-        for city in self.cities:
+        for city in fixt_cities:
         # It should create users with sequential ids.
             last_city = self.create_row(city, '201 CREATED')
             self.check(last_city.id, count)

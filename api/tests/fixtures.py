@@ -20,3 +20,5 @@ fixt_states = [
     {'name': 'California'}, {'name': 'New York'}, {'name': 'Florida'},
     {'name':  'Massachusetts'}, {'name': 'Hawaii'}, {'name': 'District of Columbia'}
 ]
+
+fixt_cities = [{'name': 'San Francisco'}, {'name': 'Sacramento'}, {'name': 'Berkeley'}]
