@@ -34,10 +34,14 @@ fixt_places = [
     {'name': 'Adelaide Hotel', 'owner': 1, 'city': 1, 'description': lorem,
      'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
      'longitude': 122.41},
-    {'name': 'Adelaide Hotel', 'owner': 1, 'city': 2, 'description': lorem,
+    {'name': 'HI Sacramento', 'owner': 2, 'city': 2, 'description': lorem,
      'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
      'longitude': 122.41},
-    {'name': 'Adelaide Hotel', 'owner': 1, 'city': 3, 'description': lorem,
+    {'name': 'Berkeley YMCA', 'owner': 3, 'city': 3, 'description': lorem,
      'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
      'longitude': 122.41}
 ]
+
+fixt_place_br = {'name': 'Adelaide Hotel', 'owner': 10, 'city': 10, 'description': lorem,
+     'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
+     'longitude': 122.41}
