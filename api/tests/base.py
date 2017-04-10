@@ -9,7 +9,7 @@ class BaseTestCase(unittest.TestCase):
         database.create_tables(self.table, safe=True)
 
     def tearDown(self):
-        for db in self.table:
+        for db in reversed(self.table):
             database.drop_table(db)
 
     def errormsg(self, expec, *got):
