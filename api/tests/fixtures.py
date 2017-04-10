@@ -22,3 +22,22 @@ fixt_states = [
 ]
 
 fixt_cities = [{'name': 'San Francisco'}, {'name': 'Sacramento'}, {'name': 'Berkeley'}]
+
+lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nisl'\
+' ligula, dictum eget sem vitae, tincidunt laoreet nulla. Proin ut condimentum'\
+' augue, a volutpat mi. Cras sit amet nisi bibendum, ullamcorper orci non,'\
+' posuere sem. Integer lacinia porta sapien, a luctus risus commodo nec.'\
+' Morbi nec luctus mi. Maecenas nec molestie sapien. Nam id leo a augue bibendum' \
+' rutrum id ut justo. In sed urna fermentum, cursus libero non, tempor tortor.'
+
+fixt_places = [
+    {'name': 'Adelaide Hotel', 'owner': 1, 'city': 1, 'description': lorem,
+     'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
+     'longitude': 122.41},
+    {'name': 'Adelaide Hotel', 'owner': 1, 'city': 2, 'description': lorem,
+     'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
+     'longitude': 122.41},
+    {'name': 'Adelaide Hotel', 'owner': 1, 'city': 3, 'description': lorem,
+     'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
+     'longitude': 122.41}
+]
