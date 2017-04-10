@@ -19,7 +19,7 @@ def create_city(id):
     data = request.form
     city_check = City.select().join(State).where(State.id == id, City.name == data['name'])
     if city_check:
-        return {'code': 10002, 'msg': 'City already exist in this state'},409
+        return {'code': 10002, 'msg': 'City already exists in this state'},409
 
     city = City(
         name = data['name'],
