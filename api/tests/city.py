@@ -4,7 +4,7 @@ from app.models.state import State
 from fixtures import fixt_states, fixt_cities
 
 class CityTestCase(BaseTestCase):
-    table = [City, State]
+    table = [State, City]
     path = '/states/1/cities'
     example = fixt_cities[0]
 

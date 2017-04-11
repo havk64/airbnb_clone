@@ -21,7 +21,7 @@ class BaseTestCase(unittest.TestCase):
     def create_row(self, data, expec):
         resp = self.app.post(self.path, data=data)
         self.check(resp.status, expec)
-        return self.table[0].select().order_by(self.table[0].id.desc()).get()
+        return self.table[-1].select().order_by(self.table[-1].id.desc()).get()
 
     def create(self, table, data):
         resp = self.app.post(table['path'], data=data)
