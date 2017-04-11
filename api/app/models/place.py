@@ -28,7 +28,7 @@ class Place(BaseModel):
             'number_bathrooms'  : self.number_bathrooms,
             'max_guest'         : self.max_guest,
             'price_by_night'    : self.price_by_night,
-            'latitute'          : self.latitute,
+            'latitude'          : self.latitude,
             'longitude'         : self.longitude
         }
         return super(Place, self).to_hash(self, place)
