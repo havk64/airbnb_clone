@@ -62,9 +62,8 @@ def update_place(id):
                 'owner': 'owner_id',
                 'city' : 'city_id'
             }.get(i)
-            setattr(place, switch, data[i])
-        else:
-            setattr(place, i, data[i])
+            i = switch
+        setattr(place, i, data[i])
 
     place.save()
     return {'code': 200, 'msg': 'Updated successfully'}, 200
