@@ -53,12 +53,7 @@ def update_user(id):
             raise Exception("Email can't be changed")
         if item == 'password':
             user.set_password(data['password'])
-        if item == 'first_name':
-            user.first_name = data['first_name']
-        if item == 'last_name':
-            user.last_name = data['last_name']
-        if item == 'is_admin':
-            user.is_admin = data['is_admin']
+        setattr(user, item, data[item])
 
     user.save()
     return {'code': 200, 'msg': 'Updated successfully'}, 200
