@@ -20,8 +20,8 @@ class BaseModel(Model):
     def to_hash(self, model, data):
         ''' Returns a hash of the BaseModel in the database '''
         data['id'] = self.id
-        data['created_at'] = self.created_at.strftime("%d/%m/%Y %H:%M:%S")
-        data['updated_at'] = self.updated_at.strftime("%d/%m/%Y %H:%M:%S")
+        data['created_at'] = self.created_at
+        data['updated_at'] = self.updated_at
         return data
 
     class Meta:
