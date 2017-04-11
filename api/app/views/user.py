@@ -59,7 +59,6 @@ def update_user(id):
             user.last_name = data['last_name']
         if item == 'is_admin':
             user.is_admin = data['is_admin']
-            print(data['is_admin'])
 
     user.save()
     return {'code': 200, 'msg': 'Updated successfully'}, 200
