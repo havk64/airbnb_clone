@@ -57,19 +57,14 @@ def update_place(id):
         return {'code': 404, 'msg': 'Place not found'}, 404
 
     for i in data:
-        switch = {
-            'owner'             : 'owner_id',
-            'city'              : 'city_id',
-            'name'              : 'name',
-            'description'       : 'description',
-            'number_rooms'      : 'number_rooms',
-            'number_bathrooms'  : 'number_bathrooms',
-            'max_guest'         : 'max_guest',
-            'price_by_night'    : 'price_by_night',
-            'latitude'          : 'latitude',
-            'longitude'         : 'longitude'
-        }.get(i)
-        setattr(place, switch, data[i])
+        if i == 'owner' or i == 'city':
+            switch = {
+                'owner': 'owner_id',
+                'city' : 'city_id'
+            }.get(i)
+            setattr(place, switch, data[i])
+        else:
+            setattr(place, i, data[i])
 
     place.save()
     return {'code': 200, 'msg': 'Updated successfully'}, 200
