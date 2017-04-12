@@ -1,6 +1,10 @@
 import unittest, logging, json
 from app.models.base import database
+from app.models.state import State
+from app.models.user import User
+from app.models.city import City
 from app import app
+from fixtures import fixt_states, fixt_cities, fixt_users
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
@@ -92,3 +96,19 @@ class BaseTestCase(unittest.TestCase):
         upd_item = json.loads(resp.data)
         for key in data:
             self.check(upd_item[key], data[key])
+
+
+    def create_states_and_cities(self):
+        state_table = {'model': State, 'path':'/states'}
+        city_table = {'model': City, 'path': '/states/1/cities'}
+        for state in fixt_states:
+            last_state = self.create(state_table, state)
+        for city in fixt_cities:
+            last_city = self.create(city_table, city)
+        return (last_state, last_city)
+
+    def create_users(self):
+        user_table = {'model': User, 'path':'/users'}
+        for user in fixt_users:
+            last_user = self.create(user_table, user)
+        return last_user

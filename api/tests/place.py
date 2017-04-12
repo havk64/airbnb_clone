@@ -4,21 +4,12 @@ from app.models.state import State
 from app.models.city import City
 from app.models.user import User
 from fixtures import *
-import unittest
+import unittest # for unittest.skip()
 
 class PlaceTestCase(BaseTestCase):
     table = [User, State, City, Place]
     path = '/places'
     example = fixt_places[0]
-
-    def create_states_and_cities(self):
-        state_table = {'model': State, 'path':'/states'}
-        city_table = {'model': City, 'path': '/states/1/cities'}
-        for state in fixt_states:
-            last_state = self.create(state_table, state)
-        for city in fixt_cities:
-            last_city = self.create(city_table, city)
-        return (last_state, last_city)
 
     def test_cities(self):
         last_state, last_city = self.create_states_and_cities()
@@ -26,12 +17,6 @@ class PlaceTestCase(BaseTestCase):
         self.check(last_city.name, fixt_cities[-1]['name'])
         city = City.get(City.id == 3, City.state == 1)
         self.check(fixt_cities[2]['name'], city.name)
-
-    def create_users(self):
-        user_table = {'model': User, 'path':'/users'}
-        for user in fixt_users:
-            last_user = self.create(user_table, user)
-        return last_user
 
     def test_users(self):
         last_user = self.create_users()
