@@ -1,7 +1,7 @@
 from peewee import *
-from base   import BaseModel
-from place  import Place
-from user   import User
+from app.models.base   import BaseModel
+from app.models.place  import Place
+from app.models.user   import User
 
 class PlaceBook(BaseModel):
     """Definition of PlaceBook Model"""
