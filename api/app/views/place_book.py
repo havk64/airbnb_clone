@@ -6,7 +6,7 @@ from datetime import datetime
 
 @app.route('/places/<int:id>/books', methods=['GET'])
 @as_json
-def get_place_books(id):
+def get_books(id):
     books = []
     query = PlaceBook.select().join(Place).where(Place.id == id)
     for book in query:
@@ -30,9 +30,9 @@ def create_books(id):
 
 @app.route('/places/<int:pid>/books/<int:id>', methods=['GET'])
 @as_json
-def get_book(sid, id):
+def get_book(pid, id):
     try:
-        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == sid)
+        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == pid)
     except Exception:
         return {'code': 404, 'msg': 'Book not found'}, 404
 
@@ -40,28 +40,33 @@ def get_book(sid, id):
 
 @app.route('/places/<int:pid>/books/<int:id>', methods=['DELETE'])
 @as_json
-def delete_book(sid, id):
+def delete_book(pid, id):
     try:
-        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == sid)
+        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == pid)
     except Exception:
         return {'code': 404, 'msg': 'Book not found'}, 404
+
     book.delete_instance()
     return {'code':200, 'msg': 'Deleted successfully'}, 200
 
-@app.route('/places/<int:sid>/books/<int:id>', methods=['PUT'])
+@app.route('/places/<int:pid>/books/<int:id>', methods=['PUT'])
 @as_json
-def update_books(sid, id):
+def update_books(pid, id):
     data = request.form
     try:
-        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == sid)
+        book = PlaceBook.get(PlaceBook.id == id, PlaceBook.place_id == pid)
     except Exception:
         return {'code': 404, 'msg': 'Book not found'}, 404
+
     for i in data:
         if i == 'user':
             raise Exception("User can't be changed")
         if i == 'place':
             setattr(book, 'place_id', data[i])
-        if i == 'date_start':
+        elif i == 'date_start':
             setattr(book, i, datetime.strptime(data[i], '%Y/%m/%d %H:%M:%S'))
         else:
             setattr(book, i, data[i])
+
+    book.save()
+    return {'code': 200, 'msg': 'Updated successfully'}, 200
