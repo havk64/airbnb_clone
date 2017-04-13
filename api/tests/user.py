@@ -33,6 +33,7 @@ class UserTestCase(BaseTestCase):
 	def test_update(self):
 		upd_data = {'first_name':'George', 'last_name':'Harrison'}
 		self.check_update(upd_data)
-		# It should give internal server error when trying to change email
-		resp = self.app.put('{}/{}'.format(self.path, 1), data={'email':'new@email.com'})
-		self.check(resp.status_code, 500)
+		# It should raise an error when trying to change email
+		with self.assertRaises(Exception) as context:
+			resp = self.app.put('{}/{}'.format(self.path, 1), data={'email':'new@email.com'})
+		self.assertTrue('Email can\'t be changed' in str(context.exception))
