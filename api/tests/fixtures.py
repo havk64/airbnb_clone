@@ -49,3 +49,11 @@ fixt_place_br = {'name': 'Adelaide Hotel', 'owner': 10, 'city': 10, 'description
 fixt_dupl_place = {'name': 'Adelaide Hotel', 'owner': 1, 'city': 1, 'description': lorem,
      'number_rooms': 4, 'number_bathrooms': 2, 'max_guest': 4, 'latitute': 37.77,
      'longitude': 122.41}
+
+fixt_pbooks = [
+    {'place': 1, 'user': 1, 'date_start': '2017/04/21 09:00:00', 'number_nights': 7},
+    {'place': 2, 'user': 1, 'date_start': '2018/01/20 09:05:00', 'number_nights': 2},
+    {'place': 3, 'user': 1, 'date_start': '2017/07/20 08:00:00', 'is_validated': True, }
+]
+
+fixt_pb_br = {'place':1, 'user':1, 'number_nights': 3}
