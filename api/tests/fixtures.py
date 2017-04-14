@@ -57,3 +57,7 @@ fixt_pbooks = [
 ]
 
 fixt_pb_br = {'place':1, 'user':1, 'number_nights': 3}
+
+fixt_amenities = [
+    {'name': 'Pool'}, {'name': 'Laundry'}, {'name': 'Room service'}, {'name': 'Breakfast'}
+]
