@@ -1,4 +1,4 @@
-from peewee import *
+from peewee import MySQLDatabase, PrimaryKeyField, Model, DateTimeField
 from datetime import datetime
 from config import *
 
