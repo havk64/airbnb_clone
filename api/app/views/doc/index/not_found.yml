@@ -1,0 +1,18 @@
+Response for Not found
+---
+tags:
+  - Index
+responses:
+  404:
+    description: Not found
+    schema:
+      id: return_not_found
+      properties:
+        code:
+          type: integer
+          description: Response status
+          default: 404
+        msg:
+          type: string
+          description: Status message
+          default: not found
