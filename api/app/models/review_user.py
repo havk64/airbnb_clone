@@ -1,7 +1,7 @@
 from peewee import Model, ForeignKeyField
-from base import database
-from user import User
-from review import Review
+from app.models.base import database
+from app.models.user import User
+from app.models.review import Review
 
 class ReviewUser(Model):
     user = ForeignKeyField(User)
