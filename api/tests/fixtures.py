@@ -61,3 +61,9 @@ fixt_pb_br = {'place':1, 'user':1, 'number_nights': 3}
 fixt_amenities = [
     {'name': 'Pool'}, {'name': 'Laundry'}, {'name': 'Room service'}, {'name': 'Breakfast'}
 ]
+
+fixt_review = [
+    {'message': 'First review: Short description', 'stars': 5, 'user': 1},
+    {'message': 'Second review: Other description', 'stars' 3, 'user': 1},
+    {'message': 'Third review: Some comments', 'stars', 'user':2}
+]
