@@ -1,7 +1,7 @@
 from peewee import ForeignKeyField, Model
-from base import database
-from place  import Place
-from amenity import Amenity
+from app.models.base import database
+from app.models.place  import Place
+from app.models.amenity import Amenity
 
 class PlaceAmenities(Model):
     place = ForeignKeyField(Place)
