@@ -1,0 +1,35 @@
+Root of AIRBNB Api
+---
+tags:
+  - Index
+responses:
+  200:
+    description: Status and server times
+    schema:
+      id: return_index
+      properties:
+        status:
+          type: string
+          description: API Status
+          default: 'OK'
+        time:
+          type: datetime
+          description: server time
+          default: '20/07/2016 15:47:29'
+        utc_time:
+          type: datetime
+          description: server time in UTC
+          default: '20/07/2016 22:47:29'
+  404:
+    description: Not found
+    schema:
+      id: return_not_found
+      properties:
+        code:
+          type: integer
+          description: Response status
+          default: 404
+        msg:
+          type: string
+          description: Status message
+          default: not found

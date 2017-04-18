@@ -2,12 +2,13 @@ from app import app
 from app.models.base import database
 from flask_json import as_json
 from datetime import datetime
+from flasgger import swag_from
 
 
 @app.route('/', methods=["GET"])
 @as_json
+@swag_from('doc/index.yml')
 def index():
-	"""Output for requests to the root dir"""
 	utc = datetime.utcnow().strftime("%Y/%m/%d %H:%M:%S")
 	now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 	return dict(status='OK', utc_time=utc, time=now)
