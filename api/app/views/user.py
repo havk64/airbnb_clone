@@ -1,10 +1,11 @@
 from app import app
 from flask_json import as_json, request, jsonify
 from app.models.user import User
+from flasgger import swag_from
 
 @app.route("/users", methods=["GET"])
+@swag_from('doc/user/get.yml')
 def get_users():
-    """Gettin all users"""
     users = []
     query = User.select()
     for i in query:

@@ -1,0 +1,47 @@
+List of all users
+---
+tags:
+  - User
+definitions:
+  User:
+    type: object
+    properties:
+      created_at:
+        type: string
+        description: Date of creation
+        default: '2017-04-09T14:58:18'
+      email:
+        type: string
+        description: User's email
+        default: 'email@host.com'
+      first_name:
+        type: string
+        description: User's first name
+        default: 'John'
+      id:
+        type: integer
+        description: User's id
+        default: 1
+      is_admin:
+        type: boolean
+        description: User's admin status
+        default: False
+      last_name:
+        type: string
+        description: User's last name
+        default: Snow
+      updated_at:
+        type: string
+        description: Last time updated
+        default: '2017-04-09T14:58:18'
+responses:
+  200:
+    description: List users
+    schema:
+      id: return_get_user
+      properties:
+        users:
+          type: array
+          description: Users List
+          items:
+            $ref: '#/definitions/User'
