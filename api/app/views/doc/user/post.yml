@@ -1,0 +1,62 @@
+Creates a new user
+---
+tags:
+  - User
+parameters:
+  - in: form
+    name: body
+    schema:
+      id: User
+      required:
+        - email
+        - first_name
+        - last_name
+        - password
+      properties:
+        created_at:
+          type: string
+          description: Date of creation
+          default: '2017-04-09T14:58:18'
+        id:
+          type: integer
+          description: User's id
+          default: 1
+        email:
+          type: string
+          description: User's email
+          default: 'email@host.com'
+        first_name:
+          type: string
+          description: User's first name
+          default: 'John'
+        last_name:
+          type: string
+          description: User's last name
+          default: Snow
+        is_admin:
+          type: boolean
+          description: User's admin status
+          default: False
+        password:
+          type: string
+          description: User's password
+          default: 12345
+        updated_at:
+          type: string
+          description: Last time updated
+          default: '2017-04-09T14:58:18'
+
+responses:
+  201:
+    description: Creates user
+    schema:
+      id: return_created
+      properties:
+        code:
+          type: integer
+          description: http status code
+          default: 201
+        msg:
+          type: string
+          description: status message
+          default: User was created successfully

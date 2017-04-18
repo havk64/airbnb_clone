@@ -14,8 +14,8 @@ def get_users():
 
 @app.route('/users', methods=['POST'])
 @as_json
+@swag_from('doc/user/post.yml')
 def create_user():
-    ''' Creating new user'''
     data = request.form
     email_check = User.select().where(User.email == data['email'])
     if email_check:
