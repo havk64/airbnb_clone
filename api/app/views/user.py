@@ -4,7 +4,7 @@ from app.models.user import User
 from flasgger import swag_from
 
 @app.route("/users", methods=["GET"])
-@swag_from('doc/user/get.yml')
+@swag_from('doc/user/list.yml')
 def get_users():
     users = []
     query = User.select()
@@ -34,8 +34,8 @@ def create_user():
 
 @app.route('/users/<int:id>', methods=['GET'])
 @as_json
+@swag_from('doc/user/get.yml')
 def get_user(id):
-    ''' Get a user'''
     try:
         user = User.get(User.id == id)
     except Exception as e:
