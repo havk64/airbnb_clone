@@ -62,8 +62,8 @@ def update_user(id):
 
 @app.route('/users/<int:id>', methods=['DELETE'])
 @as_json
+@swag_from('doc/user/delete.yml')
 def del_user(id):
-    """Deleting the user"""
     id_check = User.select().where(User.id == id)
     if not id_check:
         return {'code': 404, 'msg': 'User not found'}, 404

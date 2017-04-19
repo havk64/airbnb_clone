@@ -1,0 +1,25 @@
+Deletes an user
+---
+tags:
+  - User
+parameters:
+  - in: path
+    name: id
+    description: User id
+    required: true
+    type: integer
+    default: 2
+responses:
+  200:
+    description: Delete an user
+    schema:
+      id: return_deleted
+      properties:
+        code:
+          type: integer
+          description: http status code
+          default: 200
+        msg:
+          type: string
+          description: status message
+          default: Deleted successfully
