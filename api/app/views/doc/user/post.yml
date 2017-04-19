@@ -45,7 +45,6 @@ parameters:
           type: string
           description: Last time updated
           default: '2017-04-09T14:58:18'
-
 responses:
   201:
     description: Creates user
