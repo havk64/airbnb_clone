@@ -7,7 +7,7 @@ from flasgger import swag_from
 
 @app.route('/', methods=["GET"])
 @as_json
-@swag_from('doc/index/get.yml')
+@swag_from('apidoc/index/get.yml')
 def index():
 	utc = datetime.utcnow().strftime("%Y/%m/%d %H:%M:%S")
 	now = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
@@ -21,6 +21,6 @@ def after_request():
 
 @app.errorhandler(404)
 @as_json
-@swag_from('doc/index/not_found.yml')
+@swag_from('apidoc/index/not_found.yml')
 def not_found(error):
 	return {'code': 404, 'msg':'not found'}, 404

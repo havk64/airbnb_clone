@@ -4,7 +4,7 @@ from app.models.user import User
 from flasgger import swag_from
 
 @app.route("/users", methods=["GET"])
-@swag_from('doc/user/list.yml')
+@swag_from('apidoc/user/list.yml')
 def get_users():
     users = []
     query = User.select()
@@ -14,7 +14,7 @@ def get_users():
 
 @app.route('/users', methods=['POST'])
 @as_json
-@swag_from('doc/user/post.yml')
+@swag_from('apidoc/user/post.yml')
 def create_user():
     data = request.form
     email_check = User.select().where(User.email == data['email'])
@@ -34,7 +34,7 @@ def create_user():
 
 @app.route('/users/<int:id>', methods=['GET'])
 @as_json
-@swag_from('doc/user/get.yml')
+@swag_from('apidoc/user/get.yml')
 def get_user(id):
     try:
         user = User.get(User.id == id)
@@ -45,7 +45,7 @@ def get_user(id):
 
 @app.route('/users/<int:id>', methods=['PUT'])
 @as_json
-@swag_from('doc/user/put.yml')
+@swag_from('apidoc/user/put.yml')
 def update_user(id):
     data = request.form
     user = User.get(User.id == id)
@@ -62,7 +62,7 @@ def update_user(id):
 
 @app.route('/users/<int:id>', methods=['DELETE'])
 @as_json
-@swag_from('doc/user/delete.yml')
+@swag_from('apidoc/user/delete.yml')
 def del_user(id):
     id_check = User.select().where(User.id == id)
     if not id_check:
