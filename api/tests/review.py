@@ -16,11 +16,11 @@ class ReviewTestCase(BaseTestCase):
             count += 1
         # It should return 404 if user_id is not found(GET)
         review_table = {'model': Review, 'path': '/users/42/reviews'}
-        resp = self.app.get('/users/42/review', fixt_reviews][0])
+        resp = self.app.get('/users/42/review', fixt_reviews[0])
         self.check(resp.status_code, 404)
         # It should return 404 if user_id is not found(POST)
         review_table = {'model': Review, 'path': '/users/42/reviews'}
-        resp = self.app.post('/users/42/review', fixt_reviews][0])
+        resp = self.app.post('/users/42/review', fixt_reviews[0])
         self.check(resp.status_code, 404)
         # Bad request
         # Duplicated
