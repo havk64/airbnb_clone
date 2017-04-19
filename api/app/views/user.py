@@ -45,8 +45,8 @@ def get_user(id):
 
 @app.route('/users/<int:id>', methods=['PUT'])
 @as_json
+@swag_from('doc/user/put.yml')
 def update_user(id):
-    """Update the user"""
     data = request.form
     user = User.get(User.id == id)
     for item in data:
